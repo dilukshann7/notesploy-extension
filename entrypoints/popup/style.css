@@ -1,4 +1,19 @@
+@font-face {
+  font-family: "Inter Variable";
+  src: url("../../assets/fonts/inter-latin-wght-normal.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Saffela";
+  src: url("../../assets/fonts/saffela-regular.otf") format("opentype");
+  font-weight: 400;
+  font-display: swap;
+}
+
 :root {
+  --font-sans: "Inter Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
   --bg: #ffffff;
   --fg: #111827;
   --muted: #6b7280;
@@ -42,7 +57,7 @@ body {
   width: 320px;
   background: var(--bg);
   color: var(--fg);
-  font: 14px/1.45 system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font: 14px/1.45 var(--font-sans);
 }
 
 .panel {
@@ -60,7 +75,9 @@ body {
 
 h1 {
   margin: 0;
-  font-size: 16px;
+  font-family: "Saffela", var(--font-sans);
+  font-size: 22px;
+  font-weight: 400;
 }
 
 h2 {
