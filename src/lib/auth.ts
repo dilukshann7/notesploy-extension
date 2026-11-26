@@ -1,8 +1,8 @@
 import { browser } from 'wxt/browser';
 import { WEB_BASE } from './config';
-import { exchangeCode } from './api';
+import { apiRequest, exchangeCode } from './api';
 import { createPkcePair } from './pkce';
-import { clearSessionToken, storeSessionToken } from './session';
+import { clearSessionToken, getSessionToken, storeSessionToken } from './session';
 
 export {
   clearSessionToken,
@@ -49,7 +49,14 @@ export async function connect(): Promise<void> {
   await storeSessionToken(token);
 }
 
-/** Forgets the local session. The server session is not revoked here. */
 export async function signOut(): Promise<void> {
-  await clearSessionToken();
+  const token = await getSessionToken();
+  try {
+    // Older extension sessions share the browser's managed session.
+    if (token?.startsWith('np1.')) await apiRequest('/api/auth/sign-out', { body: {} });
+  } catch {
+    // Forget the local credential even when the server cannot be reached.
+  } finally {
+    await clearSessionToken();
+  }
 }
